@@ -2,16 +2,21 @@ package com.beerhouse.craftbeer.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.beerhouse.craftbeer.domain.Beer;
+import com.beerhouse.craftbeer.domain.dto.BeerInsertDTO;
 import com.beerhouse.craftbeer.service.BeerService;
 
 @RestController
@@ -36,5 +41,13 @@ public class BeerController {
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
 	public ResponseEntity<Beer> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(beerService.findById(id));
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Beer> insert(@Valid @RequestBody BeerInsertDTO beerInsertDTO) {
+		Beer beer = beerService.insert(beerInsertDTO);
+		return ResponseEntity.created(
+				ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(beer.getId()).toUri())
+				.body(beer);
 	}
 }
