@@ -26,6 +26,13 @@ public class ControllerExceptionHandler {
 		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(standardError);
 	}
 
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<StandardError> illegalArgument(IllegalArgumentException e, HttpServletRequest request) {
+		StandardError standardError = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+				"Argument error", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
+	}
+
 	@ExceptionHandler(GenericException.class)
 	public ResponseEntity<StandardError> genericException(GenericException e, HttpServletRequest request) {
 		StandardError standardError = new StandardError(System.currentTimeMillis(),
