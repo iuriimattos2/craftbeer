@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.beerhouse.craftbeer.domain.Beer;
-import com.beerhouse.craftbeer.domain.dto.BeerInsertDTO;
+import com.beerhouse.craftbeer.domain.dto.BeerValidationDTO;
 import com.beerhouse.craftbeer.service.BeerService;
 import com.beerhouse.craftbeer.service.util.TextBuilderService;
 import com.beerhouse.craftbeer.service.validator.util.Validator;
@@ -23,16 +23,24 @@ public class BeerValidator {
 
 	private String entity = "Beer";
 
-	private ValidatorReturn validateByName(String name) {
+	private ValidatorReturn validateByName(String name, Integer id) {
 		Optional<Beer> optBeer = beerService.findByName(name);
-		return (optBeer.isPresent()
-				? new ValidatorReturn(textBuilderService.getExceptionDescriptionForMultiRegister(entity, "name", name))
-				: new ValidatorReturn());
+		if (id == 0) {
+			return (optBeer.isPresent()
+					? new ValidatorReturn(
+							textBuilderService.getExceptionDescriptionForMultiRegister(entity, "name", name))
+					: new ValidatorReturn());
+		} else {
+			return ((optBeer.isPresent() && !optBeer.get().getId().equals(id))
+					? new ValidatorReturn(
+							textBuilderService.getExceptionDescriptionForMultiRegister(entity, "name", name))
+					: new ValidatorReturn());
+		}
 	}
 
-	public void validateInsert(BeerInsertDTO beerInsertDTO) {
+	public void validate(BeerValidationDTO beerValidationDTO, Integer id) {
 		Validator validator = new Validator();
-		validator.validateOne(validateByName(beerInsertDTO.getName().trim()));
+		validator.validateOne(validateByName(beerValidationDTO.getName().trim(), id));
 		validator.validateResult(validator);
 	}
 

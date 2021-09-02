@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.beerhouse.craftbeer.domain.Beer;
-import com.beerhouse.craftbeer.domain.dto.BeerInsertDTO;
+import com.beerhouse.craftbeer.domain.dto.BeerValidationDTO;
 import com.beerhouse.craftbeer.repository.BeerRepository;
 import com.beerhouse.craftbeer.service.exception.GenericException;
 import com.beerhouse.craftbeer.service.exception.ObjectNotFoundException;
@@ -51,13 +51,26 @@ public class BeerService {
 		return beerRepository.findByName(name);
 	}
 
-	public Beer insert(BeerInsertDTO beerInsertDTO) {
-		beerValidator.validateInsert(beerInsertDTO);
+	public Beer insert(BeerValidationDTO beerValidationDTO) {
+		beerValidator.validate(beerValidationDTO, 0);
 
-		Beer beer = new Beer(beerInsertDTO.getName(), beerInsertDTO.getIngredients(), beerInsertDTO.getAlcoholContent(),
-				beerInsertDTO.getPrice(), beerInsertDTO.getCategory());
+		Beer beer = new Beer(beerValidationDTO.getName(), beerValidationDTO.getIngredients(),
+				beerValidationDTO.getAlcoholContent(), beerValidationDTO.getPrice(), beerValidationDTO.getCategory());
 		return save(beer);
 
+	}
+
+	public Beer updateById(Integer id, BeerValidationDTO beerValidationDTO) {
+		Beer beer = findById(id);
+		beerValidator.validate(beerValidationDTO, id);
+
+		beer.setName(beerValidationDTO.getName());
+		beer.setIngredients(beerValidationDTO.getIngredients());
+		beer.setAlcoholContent(beerValidationDTO.getAlcoholContent());
+		beer.setPrice(beerValidationDTO.getPrice());
+		beer.setCategory(beerValidationDTO.getCategory());
+
+		return save(beer);
 	}
 
 	public Beer save(Beer beer) {

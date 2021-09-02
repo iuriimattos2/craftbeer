@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class BeerInsertDTO implements Serializable {
+public class BeerValidationDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message = "Beer name is required.")

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.beerhouse.craftbeer.domain.Beer;
-import com.beerhouse.craftbeer.domain.dto.BeerInsertDTO;
+import com.beerhouse.craftbeer.domain.dto.BeerValidationDTO;
 import com.beerhouse.craftbeer.service.BeerService;
 
 @RestController
@@ -44,11 +44,17 @@ public class BeerController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Beer> insert(@Valid @RequestBody BeerInsertDTO beerInsertDTO) {
-		Beer beer = beerService.insert(beerInsertDTO);
+	public ResponseEntity<Beer> insert(@Valid @RequestBody BeerValidationDTO beerValidationDTO) {
+		Beer beer = beerService.insert(beerValidationDTO);
 		return ResponseEntity.created(
 				ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(beer.getId()).toUri())
 				.body(beer);
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+	public ResponseEntity<Beer> updateById(@Valid @RequestBody BeerValidationDTO beerValidationDTO,
+			@PathVariable Integer id) {
+		return ResponseEntity.ok().body(beerService.updateById(id, beerValidationDTO));
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
