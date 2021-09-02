@@ -69,4 +69,15 @@ public class BeerService {
 					textBuilderService.getExceptionDescriptionForMultiParameters("Beer", parameters, e.toString()));
 		}
 	}
+
+	public void deleteById(Integer id) {
+		findById(id);
+		try {
+			beerRepository.deleteById(id);
+		} catch (Exception e) {
+			String[] parameters = { id.toString() };
+			throw new GenericException(
+					textBuilderService.getExceptionDescriptionForMultiParameters("Beer", parameters, e.toString()));
+		}
+	}
 }

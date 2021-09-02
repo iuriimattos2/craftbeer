@@ -50,4 +50,10 @@ public class BeerController {
 				ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(beer.getId()).toUri())
 				.body(beer);
 	}
+
+	@RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
+	public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+		beerService.deleteById(id);
+		return ResponseEntity.noContent().build();
+	}
 }
