@@ -57,6 +57,11 @@ public class BeerController {
 		return ResponseEntity.ok().body(beerService.updateById(id, beerValidationDTO));
 	}
 
+	@RequestMapping(method = RequestMethod.PATCH, value = "/{id}")
+	public ResponseEntity<Beer> updatePartialById(@Valid @RequestBody Beer beerDTO, @PathVariable Integer id) {
+		return ResponseEntity.ok().body(beerService.updatePartialById(id, beerDTO));
+	}
+
 	@RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
 		beerService.deleteById(id);

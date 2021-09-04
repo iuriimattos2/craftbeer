@@ -3,6 +3,7 @@ package com.beerhouse.craftbeer.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,9 @@ public class BeerService {
 
 	@Autowired
 	private BeerValidator beerValidator;
+
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Autowired
 	private TextBuilderService textBuilderService;
@@ -63,14 +67,39 @@ public class BeerService {
 	public Beer updateById(Integer id, BeerValidationDTO beerValidationDTO) {
 		Beer beer = findById(id);
 		beerValidator.validate(beerValidationDTO, id);
-
-		beer.setName(beerValidationDTO.getName());
-		beer.setIngredients(beerValidationDTO.getIngredients());
-		beer.setAlcoholContent(beerValidationDTO.getAlcoholContent());
-		beer.setPrice(beerValidationDTO.getPrice());
-		beer.setCategory(beerValidationDTO.getCategory());
+		beer = modelMapper.map(beerValidationDTO, Beer.class);
+		beer.setId(id);
 
 		return save(beer);
+	}
+
+	public Beer updatePartialById(Integer id, Beer beerDTO) {
+		Beer beer = findById(id);
+
+		if (validateStringValue(beer.getCategory(), beerDTO.getCategory())) {
+			beer.setName(beerDTO.getName());
+		}
+		if (validateStringValue(beer.getIngredients(), beerDTO.getIngredients())) {
+			beer.setIngredients(beerDTO.getIngredients());
+		}
+		if (validateStringValue(beer.getAlcoholContent(), beerDTO.getAlcoholContent())) {
+			beer.setAlcoholContent(beerDTO.getAlcoholContent());
+		}
+		if (beer.getPrice() != beerDTO.getPrice() && beerDTO.getPrice() != null) {
+			beer.setPrice(beerDTO.getPrice());
+		}
+		if (validateStringValue(beer.getCategory(), beerDTO.getCategory())) {
+			beer.setCategory(beerDTO.getCategory());
+		}
+
+		return save(beer);
+	}
+
+	public boolean validateStringValue(String oldValue, String newValue) {
+		if (oldValue != newValue && newValue != null && !newValue.isBlank()) {
+			return true;
+		}
+		return false;
 	}
 
 	public Beer save(Beer beer) {
