@@ -36,9 +36,7 @@ public class BeerController {
 	public ResponseEntity<Page<Beer>> findAllPaginated(@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "24") Integer linesPerPage,
 			@RequestParam(defaultValue = "ASC") String direction, @RequestParam(defaultValue = "id") String orderBy) {
-
-		Page<Beer> pageBeer = beerService.findAllPaginated(page, linesPerPage, direction, orderBy);
-		return ResponseEntity.ok().body(pageBeer);
+		return ResponseEntity.ok().body(beerService.findAllPaginated(page, linesPerPage, direction, orderBy));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
