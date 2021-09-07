@@ -41,7 +41,7 @@ public class BeerService {
 
 	public Beer findById(Integer id) {
 		Optional<Beer> optBeer = beerRepository.findById(id);
-		if (optBeer.isEmpty()) {
+		if (!optBeer.isPresent()) {
 			throw new ObjectNotFoundException(
 					textBuilderService.getExceptionDescriptionForNotFoundRegister("Beer", "id", id.toString()));
 		}
@@ -98,7 +98,7 @@ public class BeerService {
 	}
 
 	private boolean validateStringValue(String oldValue, String newValue) {
-		if (oldValue != newValue && newValue != null && !newValue.isBlank()) {
+		if (oldValue != newValue && newValue != null && newValue.trim() != "") {
 			return true;
 		}
 		return false;

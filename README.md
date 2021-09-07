@@ -94,6 +94,15 @@ Dica: Copie e cole o conteúdo do arquivo acima no [Swagger Editor](https://edit
 
 ## Seção reservada para que você descreva brevemente como executar o seu projeto
 
-Pode ser algo simples, como executar o arquivo Application.java. Ou talvez tenha alguma dependência como base de dados, por exemplo.
-
-TODO
+1. Para executar a aplicação, será necessário atender aos seguintes pontos:
+    - Possuir o Java 8 instalado e configurado na máquina.
+    - Possuir o [Lombok](https://projectlombok.org/) instalado.
+2. Clonar o projeto:
+    ```bash
+    git clone https://github.com/HeitorAmaral/craftbeer.git
+    ```
+3. Executar o projeto:
+    - Para iniciar a aplicação, execute a classe Main: Application.java
+    - A aplicação será hospedada no endereço http://localhost:9000 por padrão.
+4. Requisições e chamadas:
+    - Para fazer as chamadas é aconselhável de se usar o Postman, utilizando a collection localizada no diretório [/docs](https://github.com/HeitorAmaral/craftbeer/blob/main/docs/craftbeer.postman_collection.json).
