@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.beerhouse.craftbeer.domain.Beer;
-import com.beerhouse.craftbeer.domain.dto.BeerValidationDTO;
 import com.beerhouse.craftbeer.service.BeerService;
 import com.beerhouse.craftbeer.service.util.TextBuilderService;
 import com.beerhouse.craftbeer.service.validator.util.Validator;
@@ -38,9 +37,9 @@ public class BeerValidator {
 		}
 	}
 
-	public void validate(BeerValidationDTO beerValidationDTO, Integer id) {
+	public void validate(String beerName, Integer id) {
 		Validator validator = new Validator();
-		validator.validateOne(validateByName(beerValidationDTO.getName().trim(), id));
+		validator.validateOne(validateByName(beerName.trim(), id));
 		validator.validateResult(validator);
 	}
 

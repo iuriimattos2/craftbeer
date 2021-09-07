@@ -1,6 +1,7 @@
 package com.beerhouse.craftbeer.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +13,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @EqualsAndHashCode(of = { "id" })
 public class Beer implements Serializable {
@@ -35,12 +38,12 @@ public class Beer implements Serializable {
 	private String alcoholContent;
 
 	@Column(nullable = false)
-	private Number price;
+	private BigDecimal price;
 
 	@Column(nullable = false)
 	private String category;
 
-	public Beer(String name, String ingredients, String alcoholContent, Number price, String category) {
+	public Beer(String name, String ingredients, String alcoholContent, BigDecimal price, String category) {
 		this.name = name;
 		this.ingredients = ingredients;
 		this.alcoholContent = alcoholContent;

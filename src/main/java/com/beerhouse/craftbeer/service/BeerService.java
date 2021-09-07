@@ -3,7 +3,6 @@ package com.beerhouse.craftbeer.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.beerhouse.craftbeer.domain.Beer;
+import com.beerhouse.craftbeer.domain.dto.BeerPartialUpdateDTO;
 import com.beerhouse.craftbeer.domain.dto.BeerValidationDTO;
 import com.beerhouse.craftbeer.repository.BeerRepository;
 import com.beerhouse.craftbeer.service.exception.GenericException;
@@ -26,9 +26,6 @@ public class BeerService {
 
 	@Autowired
 	private BeerValidator beerValidator;
-
-	@Autowired
-	private ModelMapper modelMapper;
 
 	@Autowired
 	private TextBuilderService textBuilderService;
@@ -56,7 +53,7 @@ public class BeerService {
 	}
 
 	public Beer insert(BeerValidationDTO beerValidationDTO) {
-		beerValidator.validate(beerValidationDTO, 0);
+		beerValidator.validate(beerValidationDTO.getName(), 0);
 
 		Beer beer = new Beer(beerValidationDTO.getName(), beerValidationDTO.getIngredients(),
 				beerValidationDTO.getAlcoholContent(), beerValidationDTO.getPrice(), beerValidationDTO.getCategory());
@@ -66,17 +63,22 @@ public class BeerService {
 
 	public Beer updateById(Integer id, BeerValidationDTO beerValidationDTO) {
 		Beer beer = findById(id);
-		beerValidator.validate(beerValidationDTO, id);
-		beer = modelMapper.map(beerValidationDTO, Beer.class);
-		beer.setId(id);
+		beerValidator.validate(beerValidationDTO.getName(), id);
+
+		beer.setName(beerValidationDTO.getName());
+		beer.setIngredients(beerValidationDTO.getIngredients());
+		beer.setAlcoholContent(beerValidationDTO.getAlcoholContent());
+		beer.setPrice(beerValidationDTO.getPrice());
+		beer.setCategory(beerValidationDTO.getCategory());
 
 		return save(beer);
 	}
 
-	public Beer updatePartialById(Integer id, Beer beerDTO) {
+	public Beer updatePartialById(Integer id, BeerPartialUpdateDTO beerDTO) {
 		Beer beer = findById(id);
 
-		if (validateStringValue(beer.getCategory(), beerDTO.getCategory())) {
+		if (validateStringValue(beer.getName(), beerDTO.getName())) {
+			beerValidator.validate(beerDTO.getName(), id);
 			beer.setName(beerDTO.getName());
 		}
 		if (validateStringValue(beer.getIngredients(), beerDTO.getIngredients())) {
@@ -95,14 +97,14 @@ public class BeerService {
 		return save(beer);
 	}
 
-	public boolean validateStringValue(String oldValue, String newValue) {
+	private boolean validateStringValue(String oldValue, String newValue) {
 		if (oldValue != newValue && newValue != null && !newValue.isBlank()) {
 			return true;
 		}
 		return false;
 	}
 
-	public Beer save(Beer beer) {
+	private Beer save(Beer beer) {
 		try {
 			return beerRepository.save(beer);
 		} catch (Exception e) {

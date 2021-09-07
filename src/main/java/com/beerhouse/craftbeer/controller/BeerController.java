@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.beerhouse.craftbeer.domain.Beer;
+import com.beerhouse.craftbeer.domain.dto.BeerPartialUpdateDTO;
 import com.beerhouse.craftbeer.domain.dto.BeerValidationDTO;
 import com.beerhouse.craftbeer.service.BeerService;
 
@@ -35,7 +36,9 @@ public class BeerController {
 	public ResponseEntity<Page<Beer>> findAllPaginated(@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "24") Integer linesPerPage,
 			@RequestParam(defaultValue = "ASC") String direction, @RequestParam(defaultValue = "id") String orderBy) {
-		return ResponseEntity.ok().body(beerService.findAllPaginated(page, linesPerPage, direction, orderBy));
+
+		Page<Beer> pageBeer = beerService.findAllPaginated(page, linesPerPage, direction, orderBy);
+		return ResponseEntity.ok().body(pageBeer);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
@@ -58,7 +61,8 @@ public class BeerController {
 	}
 
 	@RequestMapping(method = RequestMethod.PATCH, value = "/{id}")
-	public ResponseEntity<Beer> updatePartialById(@Valid @RequestBody Beer beerDTO, @PathVariable Integer id) {
+	public ResponseEntity<Beer> updatePartialById(@Valid @RequestBody BeerPartialUpdateDTO beerDTO,
+			@PathVariable Integer id) {
 		return ResponseEntity.ok().body(beerService.updatePartialById(id, beerDTO));
 	}
 
