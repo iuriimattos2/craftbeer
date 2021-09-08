@@ -95,6 +95,10 @@ Dica: Copie e cole o conteúdo do arquivo acima no [Swagger Editor](https://edit
 ## Seção reservada para que você descreva brevemente como executar o seu projeto
 
 ### Para executar o projeto foram disponibilizadas algumas formas, utilizando ou não Docker.
+#### Requisições e chamadas:
+- Para localizar as chamadas e retornos possíveis pode se usar o Swagger, que ficará disponível no endereço http://localhost:9000/swagger-ui.html.
+- Para fazer as chamadas pode-se usar além do Swagger, a collection do Postman disponibilizada no diretório [/docs](https://github.com/HeitorAmaral/craftbeer/blob/main/docs/craftbeer.postman_collection.json).
+
 ### 1. Executar sem Docker
 1. Requisitos:
     - Possuir o Java 8 instalado e configurado na máquina.
@@ -106,8 +110,6 @@ Dica: Copie e cole o conteúdo do arquivo acima no [Swagger Editor](https://edit
 3. Executar o projeto:
     - Para iniciar a aplicação, execute a classe Main: Application.java
     - A aplicação será hospedada no endereço http://localhost:9000 por padrão.
-4. Requisições e chamadas:
-    - Para fazer as chamadas é aconselhável de se usar o Postman, utilizando a collection localizada no diretório [/docs](https://github.com/HeitorAmaral/craftbeer/blob/main/docs/craftbeer.postman_collection.json).
 
 ### 2. Executar com Docker
 1. Requisitos:

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,22 +25,28 @@ import lombok.ToString;
 public class Beer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@ApiModelProperty(position = 1)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@ApiModelProperty(position = 2)
 	@Column(nullable = false)
 	private String name;
 
+	@ApiModelProperty(position = 3)
 	@Column(nullable = false)
 	private String ingredients;
 
+	@ApiModelProperty(position = 4)
 	@Column(nullable = false)
 	private String alcoholContent;
 
+	@ApiModelProperty(position = 5)
 	@Column(nullable = false)
 	private BigDecimal price;
 
+	@ApiModelProperty(position = 6)
 	@Column(nullable = false)
 	private String category;
 

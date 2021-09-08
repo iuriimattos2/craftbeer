@@ -3,6 +3,7 @@ package com.beerhouse.craftbeer.controller.exception;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import lombok.Setter;
 public class ValidationError extends StandardError {
 	private static final long serialVersionUID = 1L;
 
+	@ApiModelProperty(position = 6)
 	private List<FieldMessage> errors = new ArrayList<>();
 
 	public ValidationError(Long timestamp, Integer status, String error, String message, String path) {
