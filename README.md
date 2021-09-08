@@ -105,7 +105,7 @@ Dica: Copie e cole o conteúdo do arquivo acima no [Swagger Editor](https://edit
     - Possuir o [Lombok](https://projectlombok.org/) instalado.
 2. Download do projeto do Git:
     ```sh
-    git clone https://github.com/HeitorAmaral/craftbeer.git
+    $ git clone https://github.com/HeitorAmaral/craftbeer.git
     ```
 3. Executar o projeto:
     - Para iniciar a aplicação, execute a classe Main: Application.java
