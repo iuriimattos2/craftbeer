@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  craftbeer:
+    container_name: craftbeer
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 9000:9000
+    restart: on-failure

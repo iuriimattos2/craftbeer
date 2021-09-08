@@ -94,11 +94,13 @@ Dica: Copie e cole o conteúdo do arquivo acima no [Swagger Editor](https://edit
 
 ## Seção reservada para que você descreva brevemente como executar o seu projeto
 
-1. Para executar a aplicação, será necessário atender aos seguintes pontos:
+### Para executar o projeto foram disponibilizadas algumas formas, utilizando ou não Docker.
+### 1. Executar sem Docker
+1. Requisitos:
     - Possuir o Java 8 instalado e configurado na máquina.
     - Possuir o [Lombok](https://projectlombok.org/) instalado.
-2. Clonar o projeto:
-    ```bash
+2. Download do projeto do Git:
+    ```sh
     git clone https://github.com/HeitorAmaral/craftbeer.git
     ```
 3. Executar o projeto:
@@ -106,3 +108,25 @@ Dica: Copie e cole o conteúdo do arquivo acima no [Swagger Editor](https://edit
     - A aplicação será hospedada no endereço http://localhost:9000 por padrão.
 4. Requisições e chamadas:
     - Para fazer as chamadas é aconselhável de se usar o Postman, utilizando a collection localizada no diretório [/docs](https://github.com/HeitorAmaral/craftbeer/blob/main/docs/craftbeer.postman_collection.json).
+
+### 2. Executar com Docker
+1. Requisitos:
+    - Possuir o Docker instalado e configurado na máquina.
+2. Download do projeto do Git:
+    ```sh
+    $ git clone https://github.com/HeitorAmaral/craftbeer.git
+    ```
+3. Executar o projeto com Docker (Criação de imagem e container manual):
+    - Executar o comando para gerar a imagem da aplicação.
+        ```sh
+        $ docker build -t image-craftbeer .
+        ```
+    - Executar o comando para criar e iniciar o container da aplicação.
+        ```sh
+        $ docker run -d --name container-craftbeer -p 9000:9000 image-craftbeer
+        ```
+4. Executar o projeto com Docker Compose (Criação de imagem e container automátizada):
+    - Para fazer isso deve se estar na raiz do projeto e executar o seguinte comando:
+        ```sh
+        $ docker-compose up
+        ```
