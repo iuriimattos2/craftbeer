@@ -67,8 +67,8 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfo("API Craftbeer - Challenge Sensedia",
-				"This project was proposed in the selection process of the company Sensedia. This project is a Rest API developed with Spring Boot and data persistence concepts.",
+		return new ApiInfo("API Craftbeer",
+				"This project is a Rest API developed with Spring Boot and data persistence concepts.",
 				"Version 1.0", "",
 				new Contact("Heitor Amaral", "https://github.com/HeitorAmaral", "heitor.amaral90@outlook.com"), "", "",
 				Collections.emptyList());
